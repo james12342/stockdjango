@@ -1,0 +1,1015 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<!-- Page Header Start -->
+<div class="page-header" style="background: url('img/banner1.jpg');">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="breadcrumb-wrapper">
+          <h2 class="product-title" id="auth">{{ user.username }}'s Dashboard</h2>
+          <!-- <ol class="breadcrumb">
+            <li><a href="#">Home /</a></li>
+            <li class="current">Dashboard</li>
+          </ol> -->
+        
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Page Header End -->
+
+<!-- Start Content -->
+<div id="content" class="section-padding">
+  <div class="container">
+
+    <div class="row">
+
+      <!-- Account Sidebar -->
+      {% include 'profiles/account-sidebar.html' %}
+      <!-- Account Sidebar -->
+      <div class="col-sm-10 col-md-9 col-lg-18">
+        <div class="page-content">
+          <div class="inner-box">
+            <div class="dashboard-box">
+              <h2 class="dashbord-title">Dashboard</h2>
+            </div>
+            <div class="dashboard-wrapper">
+              <div class="dashboard-sections">
+                <div class="row">
+                  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-5">
+                    <div class="dashboardbox">
+                      <div class="icon"><i class="lni-write"></i></div>
+                      <div class="contentbox">
+                        <h2>Total Ads</h2>
+                        <h3>{{ total_ads }} Ads</h3>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-5">
+                    <div class="dashboardbox">
+                      <div class="icon"><i class="lni-add-files"></i></div>
+                      <div class="contentbox">
+                        <h2>Featured Ads</h2>
+                        <h3>{{ featured_ads }} Ads</h3>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-5">
+                    <div class="dashboardbox">
+                      <div class="icon"><i class="lni-support"></i></div>
+                      <div class="contentbox">
+                        <h2><a href="#">AD Total Views</a></h2>
+                        <h3 id="adTotalViews"></h3>
+                      </div>
+                    </div>
+                  </div> 
+
+
+                  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-5">
+                    <div class="dashboardbox">
+                      <div class="icon"><i class="lni-cup"></i></div>
+                      <div class="contentbox">
+                        <h2>AD Total Earns</h2>
+                        <h3 id="TotalAdEarns"></h3>
+                      </div>
+                    </div>
+                  </div> 
+
+                  <!--developer HTML COPY TEXT-->
+                 
+
+                  <div class="col-xs-6 col-sm-6 col-md-12 col-lg-12">
+                    <div class="dashboardbox">
+                     
+                      <div class="contentbox">
+                        <div class="icon"><i class="lni-code"></i><h2><a href="#">
+                          Integation Code:Please copy the code and praise into your website,
+                          UPDATE the AdID assigned to you,you can change your style as well</a></h2></div>
+                        <!-- <label for="adshtml">please copy the code and praise into your website,UPDATE the AdID assigned to you,you can change your style as well</label> -->
+                        <textarea id="adsInteCode" name="adsInteCode" rows="12" cols="100">                       
+                          <style>
+                            img {
+                              display: block;
+                              margin-left: auto;
+                              margin-right: auto;
+                            }
+                            </style> 
+                            <div>
+                              <center><a href="http://www.usdtads.com/ads/{AdID}/">Advertisement</a><center>
+                              <a href="http://www.usdtads.com/ads/{AdID}/"><img src="/static/img/ad.jpg" style="width:10%;"></a>
+                            </div>
+                        </textarea>
+                        <br>
+                        <button onclick="copyadsInteCode()">Copy</button>
+                      </div>
+                    </div> 
+                    
+                  </div> 
+
+
+<!--END DEVELOPER HTML COPY TEST-->
+
+                  <!--chart--Total Views-->
+    
+                </div>
+              </div>
+              
+              {% if ads_posted %}
+
+              <div class="dashboard-box">
+                <h2 class="dashbord-title">My Ad Earn List</h2>
+              </div>
+
+              <table class="table table-responsive dashboardtable tablemyads">
+                <thead>
+                  <tr>
+                    <!-- <th>Photo</th> -->
+                    <th>ADId</th>
+                    <th>Title</th>
+                    <th>Target</th>
+                    <!-- <th>Category</th> -->
+                    <!-- <th>Price</th> -->
+                    <th>Date Posted</th> 
+                    <th>Total Views</th>
+                    <th>PPC</th>
+                    <th>Total Earns</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for ad in ads_posted %}
+                  <tr data-category="active">
+                    <td data-title="Title">
+                      <h3 id="theadid">{{ ad.pk }}</h3>
+                      <!-- <span>Ad ID: ng3D5hAMHPajQrM</span> -->
+                    </td>
+
+                    <td data-title="Title">
+                      <h3>{{ ad.title }}</h3>
+                      <!-- <span>Ad ID: ng3D5hAMHPajQrM</span> -->
+                    </td>
+                    
+                    <td data-title="Target">
+                     
+                      <h3>{{ ad.country}}</h3>
+                    </td>
+
+                    <td data-title="Date">
+                      <h3>{{ ad.date_created }}</h3>
+                    </td>
+                    <td data-title="AD Clicks">
+                      <h3 id="adTotalViews1">{{ ad.postADClickCount }}</h3>
+                    </td>
+                    <td data-title="AD PPC">
+                      <h3>{{ ad.postADClickPerEarn }}</h3>
+                    </td>
+                    <td data-title="AD Earns" id="TotalAdEarns1">
+                      <h3>{{ ad.postADTotalEarn }}</h3>
+                    </td>
+                  
+                    <td data-title="Ad Status">
+                      {% if ad.is_active %}
+                      <span class="adstatus adstatusactive">Active</span>
+                      {% else %}
+                      <span class="adstatus adstatusinactive">Inactive</span>
+                      {% endif %}
+                    </td>
+                    <td data-title="Action">
+                      <div class="btns-actions">
+                        <a class="btn-action btn-view" href="{% url 'ads-view' pk=ad.pk %}"><i class="lni-eye"></i></a>
+                        <!-- <a class="btn-action btn-edit" href="{% url 'ads-edit' pk=ad.pk %}"><i class="lni-pencil"></i></a> -->
+                        <a class="btn-action btn-delete" href="{% url 'ads-delete' pk=ad.pk %}"><i class="lni-trash"></i></a>
+                      </div>
+                    </td>
+                    
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+              <!--PAYMENT METHOD-->
+              <div class="dashboard-box">
+                <h2 class="dashbord-title">My Ad Receive Payments Account</h2>
+              </div>
+
+              <table class="table table-responsive dashboardtable tablemyads">
+                <thead>
+                  <tr>
+                   
+                    <th>User</th>
+                    <th>Payment Method</th>                 
+                    <th>Receive Payment Account</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for ad in ads_posted %}
+                  <tr data-category="active">
+                   
+                    <td data-title="User">
+                      <h3>{{ user.username }}</h3>
+                      <!-- <span>Ad ID: ng3D5hAMHPajQrM</span> -->
+                    </td>
+                   
+                    <td data-title="Payment Method">
+                      <!-- <label>Select AD Receive Payment Method <span class="req-aseteric">*</span><span class="h-text"> (We pay you the AD views by your audiences)</span></label> -->
+            <div class="select ad-post-form">
+              <select id="postADReceivePaymentMethod" name="postADReceivePaymentMethod" value="{{ ad.postADReceivePaymentMethod }}">
+                <option value="USDT">USDT</option>
+                <option value="Paypal">Paypal</option>
+                <option value="Credit Card">Credit Card</option>
+                <option value="Others">Others</option>
+              </select>
+            </div>
+          
+            <div class="error-msg">
+              <div id="postADReceivePaymentMethodmsg"></div>
+            </div>
+                      <!-- <input type="text" id="PaymentMethod" name="PaymentMethod"> -->
+                    </td>
+
+                     <td data-title="Receive Payment Account">
+                      <input type="text" id="postADPaymentReceiveAccount" name="postADPaymentReceiveAccount" size="40" value="{{ ad.postADPaymentReceiveAccount }}">
+                    </td>
+
+                    <td data-title="Action">
+                      <!-- <div class="btns-actions"> -->
+                        <a class="btn-action btn-view"><button type="button" id="editPayAccountBtn" class="btn btn-common log-btn">Update Pay Account</button></a>
+                    </td>
+                    
+                    <div class="success-msg">
+                      <div id="formsuccessmsg" class="text-center"></div>
+                    </div>
+            
+                    <div class="error-msg">
+                      <div id="formerrmsg" class="text-center"></div>
+                    </div>
+
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+
+              <!--PAYMENT STATUS-->
+              <div class="dashboard-box">
+                <h2 class="dashbord-title">My Ad Receive Payments List</h2>
+              </div>
+
+              <table class="table table-responsive dashboardtable tablemyads">
+                <thead>
+                  <tr>
+                    <!-- <th>Photo</th> -->
+                    <th>Title</th>
+                    <th>Total Earn</th>                 
+                    <th>Total Received</th>
+                    <th>Last Receive Date</th>
+                    <th>Total Receiveable</th>
+                    <th>Receive Status</th>
+                    <th>Request Payment</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for ad in ads_posted %}
+                  <tr data-category="active">
+                   
+                    <td data-title="Title">
+                      <h3>{{ ad.title }}</h3>
+                      <!-- <span>Ad ID: ng3D5hAMHPajQrM</span> -->
+                    </td>
+                    <!-- <td data-title="Category"><span class="adcategories">{{ ad.category }}</span></td> -->
+                    <!-- <td data-title="Price">
+                      <h3>{{ ad.price }}</h3>
+                    </td> -->
+                    <td data-title="Total Earns">
+                      <!-- <h3>{{ ad.state}}/{{ ad.country}}</h3> -->
+                      <h3>{{ ad.postADTotalEarn}}</h3>
+                    </td>
+
+                     <td data-title="Last Receive">
+                      <h3>{{ ad.postADPaymentLatestReceiveDate }}</h3>
+                    </td>
+                    <td data-title="Total Received">
+                      <h3>{{ ad.postADPaymentTotalReceived }}</h3>
+                    </td>
+                    <td data-title="Total Receiveable">
+                      <h3>{{ ad.postADPaymentReceiveable }}</h3>
+                    </td>
+                   
+                  
+                    <td data-title="Ad Status">
+                      <h3>{{ ad.postADPaymentReceiveStatus}}</h3>
+                      <!-- {% if ad.is_active %}
+                      <span class="adstatus adstatusinactive">Not Yet Receive</span>
+                      {% else %}
+                      <span class="adstatus adstatusactive">Full Received</span>
+                      {% endif %} -->
+                    </td>
+                    <td data-title="Action">
+                      <!-- <div class="btns-actions"> -->
+                        <a class="btn-action btn-view" href="{% url 'ads-requestpay' pk=ad.pk %}"><button type="button" id="saveBtn{{ad.pk}}" class="btn btn-common log-btn">Request Payment</button></a>
+                        <!-- <a class="btn-action btn-edit" href="{% url 'ads-edit' pk=ad.pk %}"><i class="lni-pencil"></i></a>
+                        <a class="btn-action btn-delete" href="{% url 'ads-delete' pk=ad.pk %}"><i class="lni-trash"></i></a> -->
+                      <!-- </div> -->
+                    </td>
+                    
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+
+
+
+<!--chart test-->
+<div class="dashboard-box">
+<h2 class="dashbord-title">Ad daily view count chart</h2>
+</div>
+<div style="width: 500pt;">
+  <canvas id="myChart" style="display: block;width: 1333px;height: 600px;"></canvas>
+  <section class="range-slider">
+      <span class="rangeValues"></span>
+      <input value="1" min="1" max="" type="range" />
+      <input value="60" min="1" max="" type="range" />
+  </section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<script>
+function getFormattedDate(date) {
+  var year = date.getFullYear();
+
+  var month = (1 + date.getMonth()).toString();
+  month = month.length > 1 ? month : '0' + month;
+
+  var day = date.getDate().toString();
+  day = day.length > 1 ? day : '0' + day;
+  
+  return  year+ '-'+month+'-'+day;
+}
+
+function Chart_DailyViewCount()
+{
+  var authorName = document.getElementById("authorName").innerHTML;
+console.log('authorName:'+authorName);
+const d = new Date();
+    // console.log(s_start);
+    // console.log(s_end);
+    const start = d.setDate(d.getDate() - 60);
+    const end =new Date();
+    var xValues = [];
+    let loop = new Date(start);
+    while (loop <= end) 
+    {
+    //console.log(getFormattedDate(loop));
+    xValues.push(getFormattedDate(loop));
+    let newDate = loop.setDate(loop.getDate() + 1);
+    loop = new Date(newDate);
+    }
+    //var xValues =arr;
+
+    var data_ads = JSON.parse("{{data_ads|escapejs}}");
+    var data_adViewerActivity = JSON.parse("{{data_adViewerActivity|escapejs}}");
+   // console.log('data_ads:'+data_ads);
+    //console.log(JSON.stringify(data_adViewerActivity))
+
+    var arr_adsID=[]; 
+    var arr=data_adViewerActivity;
+    //console.log(arr);
+   
+    var arry_adids = arr.filter((arr, index, self) =>
+    index === self.findIndex((t) => (t["fields"].ads === arr["fields"].ads)))
+    //console.log(arry_adids);
+
+    var dataset_pre_json=" [\r\n";
+    var dataset_mid_json=[];
+    var dataset_end_json="]";
+    var dataset_json;
+    var linecolors = ["red","blue","green","yellow","purple","orange","pink","olive","gray","brown","charcoal","maroon","coral","teal","black","bronze","ruby","indigo"];
+    var authoradid=document.getElementById('theadid').innerHTML;
+    console.log('yes...the author ad id is==========>:'+authoradid);
+    //get all the adid first, then loop the same adid, by date and count total views
+    
+      var date_viewCount=[];
+      var ad_dataset_pre;
+      //by date
+      for(i_date=0;i_date<=xValues.length-1;i_date++)
+      {
+      
+       // if(authoradid==adid)
+     //{
+      var adid_dateCount =   data_adViewerActivity.filter(value => value["fields"].AdID===parseInt(authoradid) && value["fields"].viewerViewTime.includes(xValues[i_date])).length;
+      //var adid_dateCount =   data_adViewerActivity.filter(value => value["fields"].AdID=== 27 ).length;
+      // console.log("result"+result);
+       date_viewCount.push(adid_dateCount);
+       console.log(authoradid+"--date:"+xValues[i_date]+"view count:"+adid_dateCount);
+     //}
+      
+     
+      }
+     // console.log(date_viewCount);
+//if(authoradid==adid)
+     //{
+      //console.log('authoradid is:'+authoradid+" and adid is:"+adid);     
+      var eachAd = {label: "AD"+authoradid+" views", borderColor: linecolors[0], fill: "false", data: date_viewCount};
+      console.log('eachad:'+eachAd);     
+      dataset_mid_json.push(Math.random()*30);
+    // }
+     
+  //}
+ 
+var ctx = document.getElementById("myChart").getContext("2d");
+    // create dummt data
+
+    var labels = [];
+    var values = [];
+
+    labels=xValues;
+    values=date_viewCount;
+    // console.log(labels);
+    // console.log(values);
+var chart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: "line",
+    // The data for our dataset
+    data: {
+    labels: labels,
+    datasets: [
+        {
+        label: "AD:"+authoradid+" views",
+        backgroundColor: "rgb(255, 99, 132)",
+        borderColor: "rgb(255, 99, 132)",
+        data: values,
+        },
+    ],
+    },
+    // Configuration options go here
+    options: {},
+});
+
+
+
+function getVals() {
+    // Get slider values
+    var parent = this.parentNode;
+    var slides = parent.getElementsByTagName("input");
+    var min = parseFloat(slides[0].value);
+    var max = parseFloat(slides[1].value);
+    
+    // Neither slider will clip the other, so make sure we determine which is larger
+    if (min > max) {
+    var tmp = max;
+    max = min;
+    min = tmp;}
+
+        var label = [];
+        var value = [];
+
+        label = JSON.parse(JSON.stringify(labels)).slice(min, max);
+        value = JSON.parse(JSON.stringify(values)).slice(min, max);
+
+       // console.log(labels);
+       // console.log(values);
+
+
+        chart.data.labels = label;
+        chart.data.datasets[0].data = value;
+        chart.update();
+
+    var displayElement = parent.getElementsByClassName("rangeValues")[0];
+    displayElement.innerHTML = "Min : " + min + " Max : " + max;
+}
+
+// Initialize Sliders
+var sliderSections = document.getElementsByClassName("range-slider");
+for (var x = 0; x < sliderSections.length; x++) {
+    var sliders = sliderSections[x].getElementsByTagName("input");
+    for (var y = 0; y < sliders.length; y++) {
+    if (sliders[y].type === "range") {
+        sliders[y].oninput = getVals;
+        sliders[y].max=JSON.parse(JSON.stringify(labels)).length;
+        // Manually trigger event first time to display values
+        sliders[y].oninput();
+    }
+    }
+}
+
+}
+Chart_DailyViewCount();
+</script>
+<!--end chart test-->
+
+<!--chart test earn-->
+<div class="dashboard-box">
+  <h2 class="dashbord-title">Ad daily earn count chart</h2>
+  </div>
+  <div style="width: 500pt;">
+    <canvas id="myChart_dailyearn" style="display: block;width: 1333px;height: 600px;"></canvas>
+    <section class="range-slider1">
+        <span class="rangeValues1"></span>
+        <input value="1" min="1" max="" type="range" />
+        <input value="60" min="1" max="" type="range" />
+    </section>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+  <script>
+  function getFormattedDate(date) {
+    var year = date.getFullYear();
+  
+    var month = (1 + date.getMonth()).toString();
+    month = month.length > 1 ? month : '0' + month;
+  
+    var day = date.getDate().toString();
+    day = day.length > 1 ? day : '0' + day;
+    
+    return  year+ '-'+month+'-'+day;
+  }
+  
+  function Chart_DailyEarnCount()
+  {
+  var authorName = document.getElementById("authorName").innerHTML;
+  console.log('authorName:'+authorName);
+  const d = new Date();
+      // console.log(s_start);
+      // console.log(s_end);
+      const start = d.setDate(d.getDate() - 60);
+      const end =new Date();
+      var xValues = [];
+      let loop = new Date(start);
+      while (loop <= end) 
+      {
+      //console.log(getFormattedDate(loop));
+      xValues.push(getFormattedDate(loop));
+      let newDate = loop.setDate(loop.getDate() + 1);
+      loop = new Date(newDate);
+      }
+      //var xValues =arr;
+  
+      var data_ads = JSON.parse("{{data_ads|escapejs}}");
+      var data_adViewerActivity = JSON.parse("{{data_adViewerActivity|escapejs}}");
+     // console.log('data_ads:'+data_ads);
+      //console.log(JSON.stringify(data_adViewerActivity))
+  
+      var arr_adsID=[]; 
+      var arr=data_adViewerActivity;
+      //console.log(arr);
+     
+      var arry_adids = arr.filter((arr, index, self) =>
+      index === self.findIndex((t) => (t["fields"].ads === arr["fields"].ads)))
+      //console.log(arry_adids);
+  
+      var dataset_pre_json=" [\r\n";
+      var dataset_mid_json=[];
+      var dataset_end_json="]";
+      var dataset_json;
+      var linecolors = ["red","blue","green","yellow","purple","orange","pink","olive","gray","brown","charcoal","maroon","coral","teal","black","bronze","ruby","indigo"];
+      var authoradid=document.getElementById('theadid').innerHTML;
+      console.log('yes...the author ad id is==========>:'+authoradid);
+      //get all the adid first, then loop the same adid, by date and count total views
+      // for(i=0;i<=arry_adids.length-1;i++)
+      // {
+        //var adid=arry_adids[i]["fields"]["ads"];
+        // var adauth=arry_adids[i]["fields"]["author"];
+        // console.log("adid is:"+adid);
+        var date_viewCount=[];
+        var ad_dataset_pre;
+        //by date
+        for(i_date=0;i_date<=xValues.length-1;i_date++)
+        {
+        
+         // if(authoradid==adid)
+       //{
+        var adid_dateCount =   data_adViewerActivity.filter(value => value["fields"].AdID===parseInt(authoradid) && value["fields"].viewerViewTime.includes(xValues[i_date])).length;
+        //var adid_dateCount =   data_adViewerActivity.filter(value => value["fields"].AdID=== 27 ).length;
+        // console.log("result"+result);
+        var adid_dateEarn=adid_dateCount*0.001;
+      // console.log("result"+result);
+       date_viewCount.push(adid_dateEarn);
+        // date_viewCount.push(adid_dateCount);
+         console.log(authoradid+"--date:"+xValues[i_date]+"view count:"+adid_dateCount);
+       //}
+        
+       
+        }
+       // console.log(date_viewCount);
+  //if(authoradid==adid)
+       //{
+        //console.log('authoradid is:'+authoradid+" and adid is:"+adid);     
+        var eachAd = {label: "AD"+authoradid+" views", borderColor: linecolors[0], fill: "false", data: date_viewCount};
+        console.log('eachad:'+eachAd);     
+        dataset_mid_json.push(Math.random()*30);
+      // }
+       
+    //}
+   
+  var ctx = document.getElementById("myChart_dailyearn").getContext("2d");
+      // create dummt data
+  
+      var labels = [];
+      var values = [];
+  
+      
+      labels=xValues;
+      values=date_viewCount;
+      // console.log(labels);
+      // console.log(values);
+  var chart = new Chart(ctx, {
+      // The type of chart we want to create
+      type: "line",
+      // The data for our dataset
+      data: {
+      labels: labels,
+      datasets: [
+          {
+          label: "AD:"+authoradid+" earns",
+          backgroundColor: "rgb(255, 99, 132)",
+          borderColor: "rgb(255, 99, 132)",
+          data: values,
+          },
+      ],
+      },
+      // Configuration options go here
+      options: {},
+  });
+  
+  
+  
+  function getVals() {
+      // Get slider values
+      var parent = this.parentNode;
+      var slides = parent.getElementsByTagName("input");
+      var min = parseFloat(slides[0].value);
+      var max = parseFloat(slides[1].value);
+      
+      // Neither slider will clip the other, so make sure we determine which is larger
+      if (min > max) {
+      var tmp = max;
+      max = min;
+      min = tmp;}
+  
+          var label = [];
+          var value = [];
+  
+          label = JSON.parse(JSON.stringify(labels)).slice(min, max);
+  
+        
+          value = JSON.parse(JSON.stringify(values)).slice(min, max);
+  
+         // console.log(labels);
+         // console.log(values);
+  
+  
+          chart.data.labels = label;
+          chart.data.datasets[0].data = value;
+          chart.update();
+  
+      var displayElement = parent.getElementsByClassName("rangeValues1")[0];
+      displayElement.innerHTML = "Min : " + min + " Max : " + max;
+  }
+  
+  // Initialize Sliders
+  var sliderSections = document.getElementsByClassName("range-slider1");
+  for (var x = 0; x < sliderSections.length; x++) {
+      var sliders = sliderSections[x].getElementsByTagName("input");
+      for (var y = 0; y < sliders.length; y++) {
+      if (sliders[y].type === "range") {
+          sliders[y].oninput = getVals;
+          sliders[y].max=JSON.parse(JSON.stringify(labels)).length;
+          // Manually trigger event first time to display values
+          sliders[y].oninput();
+      }
+      }
+  }
+  
+  }
+  Chart_DailyEarnCount();
+  </script>
+  <!--end chart test-->
+              {% endif %}
+            </div>
+          </div>
+         
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Content -->
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+<script>
+
+function getFormattedDate(date) {
+  var year = date.getFullYear();
+
+  var month = (1 + date.getMonth()).toString();
+  month = month.length > 1 ? month : '0' + month;
+
+  var day = date.getDate().toString();
+  day = day.length > 1 ? day : '0' + day;
+  
+  return  year+ '-'+month+'-'+day;
+}
+
+function AdsIPViewCountByDate()
+  {
+    //var select = document.getElementById('selectViewsDuration');
+    //var value_Duration = select.options[select.selectedIndex].value;
+    //console.log(value_Duration); // en
+
+    const d = new Date();
+    // console.log(s_start);
+    // console.log(s_end);
+    const start = d.setDate(d.getDate() - value_Duration);
+    const end =new Date();
+    var xValues = [];
+    let loop = new Date(start);
+    while (loop <= end) 
+    {
+    //console.log(getFormattedDate(loop));
+    xValues.push(getFormattedDate(loop));
+    let newDate = loop.setDate(loop.getDate() + 1);
+    loop = new Date(newDate);
+    }
+    //var xValues =arr;
+
+    var data_ads = JSON.parse("{{data_ads|escapejs}}");
+    var data_adViewerActivity = JSON.parse("{{data_adViewerActivity|escapejs}}");
+   // console.log('data_ads:'+data_ads);
+   // console.log(JSON.stringify(data_adViewerActivity))
+
+    var arr_adsID=[]; 
+    var arr=data_adViewerActivity;
+    var arry_adids = arr.filter((arr, index, self) =>
+    index === self.findIndex((t) => (t["fields"].ads === arr["fields"].ads)))
+    //console.log(arry_adids);
+
+    var dataset_pre_json=" [\r\n";
+    var dataset_mid_json=[];
+    var dataset_end_json="]";
+    var dataset_json;
+    var linecolors = ["red","blue","green","yellow","purple","orange","pink","olive","gray","brown","charcoal","maroon","coral","teal","black","bronze","ruby","indigo"];
+    
+
+    //get all the adid first, then loop the same adid, by date and count total views
+    for(i=0;i<=arry_adids.length-1;i++)
+    {
+      var adid=arry_adids[i]["fields"]["ads"];
+     // console.log("adid is:"+adid);
+     var authoradid=document.getElementById('theadid').innerHTML;
+     console.log('this author adid is:'+authoradid);
+      var date_viewCount=[];
+      var ad_dataset_pre;
+      //by date
+      for(i_date=0;i_date<=xValues.length-1;i_date++)
+      {
+      
+       var adid_dateCount =   data_adViewerActivity.filter(value => value["fields"].ads=== adid && value["fields"].viewerViewTime.includes(xValues[i_date])).length;
+      // console.log("result"+result);
+       date_viewCount.push(adid_dateCount);
+       //console.log(adid+"--date:"+xValues[i_date]+"view count:"+adid_dateCount);
+     
+      }
+      console.log(date_viewCount);
+      if(authoradid==adid)
+      {
+        var eachAd = {label: "AD"+adid+" views", borderColor: linecolors[i], fill: "false", data: date_viewCount};
+     // console.log(dataset_mid_json);     
+      dataset_mid_json.push(eachAd);
+      }
+
+  }
+ 
+ //var xValues = ['05/04','05/05','05/06','05/07','05/08','05/09','05/10','05/11','05/12','05/13'];
+  
+    new Chart("Chart_TotalViews", 
+    {
+    type: "line",
+    maintainAspectRatio: false,
+    responsive: true,
+    data: {
+      labels: xValues,
+    
+
+    datasets:dataset_mid_json
+    },
+    options: {
+      legend: {display: true},
+    }
+  });
+  }
+  
+ 
+
+function AdsEarnCountByDate()
+  {
+   // var select = document.getElementById('selectEarnDuration');
+    var value_Duration = select.options[select.selectedIndex].value;
+    //console.log(value_Duration); // en
+
+    const d = new Date();
+    // console.log(s_start);
+    // console.log(s_end);
+    const start = d.setDate(d.getDate() - value_Duration);
+    const end =new Date();
+    var xValues = [];
+    let loop = new Date(start);
+    while (loop <= end) 
+    {
+    //console.log(getFormattedDate(loop));
+    xValues.push(getFormattedDate(loop));
+    let newDate = loop.setDate(loop.getDate() + 1);
+    loop = new Date(newDate);
+    }
+    //var xValues =arr;
+
+    var data_ads = JSON.parse("{{data_ads|escapejs}}");
+    var data_adViewerActivity = JSON.parse("{{data_adViewerActivity|escapejs}}");
+    // console.log('data_ads:'+data_ads);
+    // console.log(JSON.stringify(data_adViewerActivity))
+
+    var arr_adsID=[]; 
+    var arr=data_adViewerActivity;
+    var arry_adids = arr.filter((arr, index, self) =>
+    index === self.findIndex((t) => (t["fields"].ads === arr["fields"].ads)))
+    //console.log(arry_adids);
+
+    var dataset_pre_json=" [\r\n";
+    var dataset_mid_json=[];
+    var dataset_end_json="]";
+    var dataset_json;
+    var linecolors = ["red","blue","green","yellow","purple","orange","pink","olive","gray","brown","charcoal","maroon","coral","teal","black","bronze","ruby","indigo"];
+    
+
+    //get all the adid first, then loop the same adid, by date and count total views
+    for(i=0;i<=arry_adids.length-1;i++)
+    {
+      var adid=arry_adids[i]["fields"]["ads"];
+      var authoradid=document.getElementById('theadid').innerHTML;
+     console.log('this author adid is:'+authoradid);
+     // console.log("adid is:"+adid);
+      var date_viewCount=[];
+      var ad_dataset_pre;
+      //by date
+      for(i_date=0;i_date<=xValues.length-1;i_date++)
+      {
+      
+       var adid_dateCount =   data_adViewerActivity.filter(value => value["fields"].ads=== adid && value["fields"].viewerViewTime.includes(xValues[i_date])).length;
+       var adid_dateEarn=adid_dateCount*0.001;
+      // console.log("result"+result);
+       date_viewCount.push(adid_dateEarn);
+       //console.log(adid+"--date:"+xValues[i_date]+"view count:"+adid_dateCount);
+     
+      }
+      //console.log(adid_dateEarn);
+
+      if(authoradid==adid)
+      {
+        var eachAd = {label: "AD"+adid+" earns", backgroundColor: linecolors[i], fill: "false", data: date_viewCount};
+      //console.log(dataset_mid_json);     
+      dataset_mid_json.push(eachAd);
+      }
+
+     
+  }
+ 
+ //var xValues = ['05/04','05/05','05/06','05/07','05/08','05/09','05/10','05/11','05/12','05/13'];
+  
+    new Chart("Chart_TotalEarns", 
+    {
+    type: "bar",
+   
+    data: {
+      labels: xValues,
+      //backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+    datasets:dataset_mid_json
+    },
+    options: {
+      legend: { display: false },
+      title: {
+        display: true,
+        text: 'Ad daily total earns'
+      }
+    }
+  }
+  
+  );
+  }
+
+function copyadsInteCode() {
+  let textarea = document.getElementById("adsInteCode");
+  textarea.select();
+  document.execCommand("copy");
+}
+  
+function dataElementSync()
+{
+  var totalEarn=document.getElementById('TotalAdEarns1').innerText;
+  var adTotalViews1=document.getElementById('adTotalViews1').innerText;
+  console.log('totalEarn:'+totalEarn);
+document.getElementById('TotalAdEarns').innerText="$"+totalEarn
+document.getElementById('adTotalViews').innerText=adTotalViews1+" times"
+
+adTotalViews1
+
+}
+//AdsIPViewCountByDate();
+//AdsEarnCountByDate();
+dataElementSync();
+
+</script>
+
+<!--Save the payment account -->
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var files = []
+    FilePond.registerPlugin(FilePondPluginFileValidateSize);
+    FilePond.registerPlugin(FilePondPluginFileValidateType);
+    FilePond.setOptions({
+      allowMultiple: true,
+      maxFiles: 5,
+      maxFileSize: '10MB'
+    })
+    const inputElement = document.querySelector('input[type="file"]');
+    const pond = FilePond.create(inputElement, {
+      acceptedFileTypes: ['image/png', 'image/jpeg'],
+      onaddfile: (err, fileItem) => {
+        if (!err) {
+          files.push(fileItem.file)
+        }
+        console.log(files)
+      },
+      onremovefile: (err, fileItem) => {
+        const index = files.indexOf(fileItem.file)
+        if (index > -1) {
+          files.splice(index, 1)
+        }
+        console.log(files)
+      }
+    });
+
+    var formData = new FormData();
+    $(document).on('click', '#editPayAccountBtn', function (e) {
+
+      {% comment %} if ($('#postADReceivePaymentMethod').val() === "") {
+        $("#postADReceivePaymentMethodmsg").html("<div class='alert alert-danger'>Title can not be empty</div>");
+      }
+
+      if ($('#postADPaymentReceiveAccount').val() === "") {
+        $("#postADPaymentReceiveAccountmsg").html("<div class='alert alert-danger'>Description can not be empty</div>");
+      }
+
+     
+      {% endcomment %}
+
+
+      var theadid=document.getElementById('theadid').innerText;
+      formData.append('postADReceivePaymentMethod', $('#postADReceivePaymentMethod').val())
+      formData.append('postADPaymentReceiveAccount', $('#postADPaymentReceiveAccount').val())
+      formData.append('AdID', theadid)
+     
+    
+
+      formData.append('csrfmiddlewaretoken', '{{ csrf_token }}')
+
+      console.log (formData)
+      $.ajax({
+        type: 'POST',
+        url: '{% url "ads-updatepayacc" %}',
+        data: formData,
+        cache: false,
+        processData: false,
+        contentType: false,
+        enctype: 'multipart/form-data',
+        success: function () {
+          $("#formsuccessmsg").html(
+            "<div class='alert alert-success'>The payment account has been posted successfully.</div>"
+          );
+          // alert('The payment account has been posted successfully')
+          $('#ad-post-form').each(function () {
+            this.reset(); //Here form fields will be cleared.
+          });
+          
+        },
+        error: function (xhr, errmsg, err) {
+          $("#formerrmsg").html(
+            // "<div class='alert alert-danger'>You have one or more error. Please provide all required fields to post ad.</div>"
+            "<div class='alert alert-success'>The payment account has been posted successfully.</div>"
+          );
+          // console.log(xhr.status + ":" + xhr.responseText)
+          // alert('Failed to post. Make sure you fill all the fields')
+
+
+        }
+      })
+    })
+    //alert('The payment account has been posted successfully');
+    console.log(formData)
+  })
+</script>
+<!--end save-->
+
+{% endblock content %}

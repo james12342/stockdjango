@@ -1,0 +1,356 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<!-- Page Header Start -->
+<div class="page-header" style="background: url('img/banner1.jpg');">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="breadcrumb-wrapper">
+          <h2 class="product-title">Edit your Ads</h2>
+          <!-- <ol class="breadcrumb">
+            <li><a href="#">Home /</a></li>
+            <li class="current">Post your Ads</li>
+          </ol> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Page Header End -->
+
+<!-- Start Content -->
+
+<!--end get client ip address-->
+<div id="content" class="section-padding">
+  <div class="container">
+    <div class="row justify-content-center">
+
+      <div class="col-lg-5 col-md-12 col-xs-12">
+        {% if request.user.is_authenticated %}
+        <div class="row page-content">
+            <!-- for csrf token -->
+          {% csrf_token %}
+          <form action="" class="ads-form" id="ad-post-form">
+
+            <label>Product Title <span class="req-aseteric">*</span></label>
+            <input type="text" id="title" class="form-control ad-post-form" value="{{editForm.title.value}}"> 
+          
+            <div class="error-msg">
+              <div id="titlemsg"></div>
+            </div>
+
+            <label>Product Description <span class="req-aseteric">*</span></label>
+            <textarea rows="6" id="description" class="form-control ad-post-form"
+            >{{editForm.description.value}}</textarea>
+            <div class="error-msg">
+              <div id="descriptionmsg"></div>
+            </div>
+
+            <label>Select Ads Category <span class="req-aseteric">*</span></label>
+            <div class="select ad-post-form">
+              <select id="category" name="category" class="form-control" >
+                <option value="Automotive" >>Automotive</option>
+                <option value="Cosmetics & Toiletries">Cosmetics & Toiletries</option>
+                <option value="Distribution Channels">Distribution Channels</option>
+                <option value="Entertainment">Entertainment</option>
+                <option value="Financial">Financial</option>
+                <option value="Food">Food</option>
+                <option value="Healthcare">Healthcare</option>
+                <option value="Institutions">Institutions</option>
+                <option value="Media & Publishing & Advertising">Media & Publishing & Advertising</option>
+                <option value="Public Transportation Hotels & Resorts">Public Transportation Hotels & Resorts</option>
+                <option value="Real Estate">Real Estate</option>
+                <option value="Retail">Retail</option>
+                <option value="Telecom">Telecom</option>
+                <option value="Others">Others</option>
+                </select>
+            </div>
+            <div class="error-msg">
+              <div id="categorymsg"></div>
+            </div>
+
+            <label>Product Price <span class="req-aseteric">*</span> <span class="h-text"> (Value should be numeric.
+                Don't put $ sign.)</span></label>
+            <input type="number" id="price" class="form-control ad-post-form" value="{{editForm.price.value}}">
+            <div class="error-msg">
+              <div id="pricemsg"></div>
+            </div>
+
+            <label>Select Product Condition <span class="req-aseteric">*</span></label>
+            <div class="select ad-post-form">
+              <select id="condition" name="condition" class="form-control">
+                <option value="Excellent">Excellent</option>
+                <option value="Good">Good</option>
+                <option value="Fair">Fair</option>
+              </select>
+            </div>
+            <div class="error-msg">
+              <div id="conditionmsg"></div>
+            </div>
+
+<!--James Add-->
+
+            <label>Poster Image URL <span class="req-aseteric">*</span></label>
+            <input type="text" id="postImageUrl" class="form-control ad-post-form"
+            value="{{editForm.postImageUrl.value}}">
+            <div class="error-msg">
+              <div id="postImageUrlmsg"></div>
+            </div>
+
+            <label>Poster AD URL <span class="req-aseteric">*</span></label>
+            <input type="text" id="postADUrl" class="form-control ad-post-form"
+            value="{{editForm.postADUrl.value}}">
+            <div class="error-msg">
+              <div id="postADUrlmsg"></div>
+            </div>
+
+            <label>Poster AD Click Count <span class="req-aseteric">*</span></label>
+            <input type="text" id="postADClickCount" class="form-control ad-post-form" value="{{editForm.postADClickCount.value}}">
+            <div class="error-msg">
+              <div id="postADClickCountmsg"></div>
+            </div>
+
+            <label>Poster AD Click Per Earn <span class="req-aseteric">*</span></label>
+            <input type="text" id="postADClickPerEarn" class="form-control ad-post-form" value="{{editForm.postADClickPerEarn.value}}">
+            <div class="error-msg">
+              <div id="postADClickPerEarnmsg"></div>
+            </div>
+
+            <label>Poster AD Total Earn <span class="req-aseteric">*</span></label>
+            <input type="text" id="postADTotalEarn" class="form-control ad-post-form" value="{{editForm.postADTotalEarn.value}}" >
+            <div class="error-msg">
+              <div id="postADTotalEarnmsg"></div>
+            </div>
+
+            <label>Post Javascript Genaerated<span class="req-aseteric">*</span></label>
+            <textarea rows="6" id="description" class="form-control ad-post-form"
+            value="{{editForm.postJavascript.value}}"></textarea>
+            <div class="error-msg">
+              <div id="postJavascriptmsg"></div>
+            </div>
+<!--James Add end-->
+            <label>Your IP Address <span class="req-aseteric">*</span></label>
+            <input type="text" id="postIPaddress" value="{{editForm.postIPaddress.value}}" class="form-control ad-post-form">          
+            <div class="error-msg">
+              <div id="postIPaddressmsg"></div>
+            </div>
+
+            <label>Your Country <span class="req-aseteric">*</span></label>
+            <div class="select ad-post-form">
+              <input type="text" id="country" value="{{editForm.country.value}}" class="form-control ad-post-form">
+            </div>
+
+            <label>Your State <span class="req-aseteric">*</span></label>
+            <input type="text" id="state" value="{{editForm.state.value}}" class="form-control ad-post-form">  
+            <div class="error-msg">
+              <div id="statemsg"></div>
+            </div>
+
+            <label>Your City <span class="req-aseteric">*</span></label>
+            <input type="text" id="city" class="form-control ad-post-form" value="{{editForm.city.value}}">
+            <div class="error-msg">
+              <div id="citymsg"></div>
+            </div>
+
+            <label>Company/Brand <span class="h-text">(Leave empty if not applicable)</span></label>
+            <input type="text" id="brand" class="form-control ad-post-form" value="{{editForm.brand.value}}">
+            <div class="error-msg">
+              <div id="brandmsg"></div>
+            </div>
+
+            
+            <label>Your Phone no. <span class="req-aseteric">*</span></label>
+            <input type="text" id="phone" class="form-control ad-post-form" value="{{editForm.phone.value}}">
+            <div class="error-msg">
+              <div id="phonemsg"></div>
+            </div>
+
+            <label>Post Video Url <span class="h-text"> (Don't post embed link. Leave empty if not
+                applicable)</span></label>
+            <input type="url" id="video" class="form-control ad-post-form"
+              placeholder="e.g. https://www.youtube.com/watch?v=ooHvPr4Bk4I">
+            <label>Post Product Picture <span class="h-text"> (Max. 5 pictures. File size should be less than 3MB.
+                Allowed file type jpeg, jpg & png.) </span></label>
+
+            <input type="file" multiple>
+
+            <button type="button" id="saveBtn" class="btn btn-common log-btn">Post Ad</button>
+          </form>
+        </div>
+
+        <div class="success-msg">
+          <div id="formsuccessmsg" class="text-center"></div>
+        </div>
+
+        <div class="error-msg">
+          <div id="formerrmsg" class="text-center"></div>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Content -->
+
+<!--James add Javascript-->
+<!--get client IP address-->
+<title>Getting Clients IP</title>
+<style>
+p, h1 {
+    color: red;
+}
+</style>
+
+<script src=
+"https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+</script>
+ 
+  <script>
+ 
+
+
+function ipLookUp () {
+$.ajax('http://ip-api.com/json')
+  .then(
+      function success(response) {
+          console.log('User\'s Location Data is ', response);
+          console.log('User\'s Country', response.country);
+          document.getElementById("postIPaddress").setAttribute('value', response.query);
+          document.getElementById("country").setAttribute('value', response.country);
+          document.getElementById("state").setAttribute('value', response.regionName);
+          document.getElementById("city").setAttribute('value', response.city);
+      },
+
+      function fail(data, status) {
+          console.log('Request failed.  Returned status of',
+                      status);
+      }
+  );
+}
+ipLookUp()
+
+</script>
+<!--end James add Javascript-->
+
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var files = []
+    FilePond.registerPlugin(FilePondPluginFileValidateSize);
+    FilePond.registerPlugin(FilePondPluginFileValidateType);
+    FilePond.setOptions({
+      allowMultiple: true,
+      maxFiles: 5,
+      maxFileSize: '10MB'
+    })
+    const inputElement = document.querySelector('input[type="file"]');
+    const pond = FilePond.create(inputElement, {
+      acceptedFileTypes: ['image/png', 'image/jpeg'],
+      onaddfile: (err, fileItem) => {
+        if (!err) {
+          files.push(fileItem.file)
+        }
+        console.log(files)
+      },
+      onremovefile: (err, fileItem) => {
+        const index = files.indexOf(fileItem.file)
+        if (index > -1) {
+          files.splice(index, 1)
+        }
+        console.log(files)
+      }
+    });
+
+    var formData = new FormData();
+    $(document).on('click', '#saveBtn', function (e) {
+
+      {% comment %} if ($('#title').val() === "") {
+        $("#titlemsg").html("<div class='alert alert-danger'>Title can not be empty</div>");
+      }
+
+      if ($('#description').val() === "") {
+        $("#descriptionmsg").html("<div class='alert alert-danger'>Description can not be empty</div>");
+      }
+
+      if ($('#category').val() === "") {
+        $("#categorymsg").html("<div class='alert alert-danger'>Category can not be empty</div>");
+      }
+
+      if ($('#price').val() === "") {
+        $("#pricemsg").html("<div class='alert alert-danger'>Price can not be empty & must be numeric</div>");
+      }
+
+      if ($('#condition').val() === "") {
+        $("#conditionmsg").html("<div class='alert alert-danger'>Condition can not be empty</div>");
+      }
+
+      if ($('#state').val() === "") {
+        $("#statemsg").html("<div class='alert alert-danger'>State can not be empty</div>");
+      }
+
+      if ($('#city').val() === "") {
+        $("#citymsg").html("<div class='alert alert-danger'>City can not be empty</div>");
+      }
+
+      if ($('#phone').val() === "") {
+        $("#phonemsg").html("<div class='alert alert-danger'>You must provide a phone no.</div>");
+      } {% endcomment %}
+
+
+      formData.append('length', files.length)
+      formData.append('title', $('#title').val())
+      formData.append('description', $('#description').val())
+      formData.append('category', $('#category').val())
+      formData.append('price', $('#price').val())
+      formData.append('condition', $('#condition').val())
+      formData.append('country', $('#country').val())
+      formData.append('postIPaddress', $('#postIPaddress').val())
+      formData.append('postADViewerIP', $('#postADViewerIP').val())
+      formData.append('state', $('#state').val())
+      formData.append('city', $('#city').val())
+      formData.append('brand', $('#brand').val())
+      formData.append('phone', $('#phone').val())
+      formData.append('video', $('#video').val())
+      for (var i = 0; i < files.length; i++) {
+        formData.append('images' + i, files[i])
+      }
+
+
+      formData.append('csrfmiddlewaretoken', '{{ csrf_token }}')
+
+      $.ajax({
+        type: 'POST',
+        url: '{% url "post-ads" %}',
+        data: formData,
+        cache: false,
+        processData: false,
+        contentType: false,
+        enctype: 'multipart/form-data',
+        success: function () {
+          $("#formsuccessmsg").html(
+            "<div class='alert alert-success'>The Ad has been posted successfully and   waiting for approval by Admin.</div>"
+          );
+          // alert('The Ads has been posted successfully!')
+          $('#ad-post-form').each(function () {
+            this.reset(); //Here form fields will be cleared.
+          });
+          
+        },
+        error: function (xhr, errmsg, err) {
+          $("#formerrmsg").html(
+            "<div class='alert alert-danger'>You have one or more error. Please provide all required fields to post ad.</div>"
+          );
+          // console.log(xhr.status + ":" + xhr.responseText)
+          // alert('Failed to post. Make sure you fill all the fields')
+
+
+        }
+      })
+    })
+    console.log(formData)
+  })
+</script>
+{% endblock content %}
